@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/offline">
+
+<head>
+<title>NJ Ecommerce</title>
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- Bootstrap core CSS -->
+<link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
+	rel="stylesheet">
+
+<!-- Custom fonts for this template -->
+<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
+	rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+	rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Kaushan+Script'
+	rel='stylesheet' type='text/css'>
+<link
+	href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
+	rel='stylesheet' type='text/css'>
+<link
+	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
+	rel='stylesheet' type='text/css'>
+
+
+<!-- Custom styles for this template -->
+<link th:href="@{css/home.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<!-- <div class="topnav">
+			<a class="Home Page" th:ref="@{'/'}">Home</a>
+			<a class="Home Page" th:ref="@{'/catalog'}">Catalog</a>
+			<a class="Home Page" th:ref="@{'/contact-us'}">Contact Us</a>
+			<a class="Home Page" th:ref="@{'/cart'}">Cart</a>
+		</div>
+		 -->
+
+	<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+		<a class="navbar-brand" href="#">NJ Ecommerce</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="#">Home
+						<span class="sr-only">(current)</span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{'/catalog'}">Catalog</a></li>
+				<!-- 		<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> Dropdown </a> -->
+				<!-- 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#">Action</a> <a
+							class="dropdown-item" href="#">Another action</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">Something else here</a>
+					</div></li> -->
+				<li class="nav-item"><a class="nav-link" href="/contact-us">Contact
+						Us</a></li>
+			
+			</ul>
+			<form action="#" th:object="${product}" th:action="@{/search}"
+				method="POST" class="form-inline my-2 my-lg-0">
+				<input class="form-control mr-sm-2" type="search" th:field="*{name}"
+					placeholder="Search Products" aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			</form>
+			                <a class="btn btn-success btn-sm ml-3" th:href="@{/cart}">
+                    <i class="fa fa-shopping-cart"></i> Cart
+                    <span class="badge badge-light" th:text="${itemsInCart}"></span>
+                </a>
+		</div>
+	</nav>
+
+	<!-- Header -->
+
+	<div class="view intro-2">
+		<div class="full-bg-img">
+			<div class="mask rgba-black-strong flex-center">
+				<div class="container">
+					<div class="white-text text-center wow fadeInUp"
+						style="color: white; padding: 225px;">
+						<h2>NJ Ecommerce</h2>
+						<h5>Home to the best luxury accessories!</h5>
+						<br>
+						<button class="btn-md btn-success">Visit Catalog</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container" style="padding: 25px;">
+		<div class="col-12">
+			<h2 style="text-align: center; padding: 25px;">Featured Products</h2>
+		</div>
+		<div class="row">
+			<div class="col-12 col-sm-8 col-md-6 col-lg-4">
+				<div th:each="product : ${popularProducts}">
+					<form action="#" th:action="@{/cart/{id}(id=${product.id})}"
+						th:object="${item}" method="POST">
+						<div class="card">
+							<img class="card-img" th:src="${product.getPictureUrl()}">
+							<a href="#" class="card-link text-danger like"> <i
+								class="fas fa-heart"></i>
+							</a>
+						</div>
+						<div class="card-body">
+							<h4 class="card-title" th:text="${product.getName()}"></h4>
+							<h6 class="card-subtitle mb-2 text-muted"
+								th:text="${product.getCategory()}"></h6>
+							<p class="card-text" th:text="${product.getDescription()}">
+							<div
+								class="buy d-flex justify-content-between align-items-center">
+								<div class="price text-success">
+									<h5 class="mt-4" th:text="'$' + ${product.getPrice()}"></h5>
+								</div>
+								<div class="form-group blu-margin">
+									<div class="form-label-group">
+										<input th:field="${item.quantity}" type="text"
+											id="quantity" name="quantity" class="form-control"
+											placeholder="1" required="required">
+									</div>
+								</div>
+								<button class="btn btn-success my-2 my-sm-0" type="submit">Add
+									To cart</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+	<div class="container text-center">
+		<small>Copyright &copy; NJ Ecom (example for testing purposes)</small>
+	</div>
+	<div class="container text-center">
+		<a href="/signup">Sign Up</a>
+	</div>
+
+</footer>
+
+
+</html>

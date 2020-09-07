@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/offline">
+
+<head>
+<title>NJ Ecommerce</title>
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- Bootstrap core CSS -->
+<link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
+	rel="stylesheet">
+
+<!-- Custom fonts for this template -->
+<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
+	rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+	rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Kaushan+Script'
+	rel='stylesheet' type='text/css'>
+<link
+	href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
+	rel='stylesheet' type='text/css'>
+<link
+	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
+	rel='stylesheet' type='text/css'>
+
+<!-- Custom styles for this template -->
+<link th:href="@{css/home.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<!-- <div class="topnav">
+			<a class="Home Page" th:ref="@{'/'}">Home</a>
+			<a class="Home Page" th:ref="@{'/catalog'}">Catalog</a>
+			<a class="Home Page" th:ref="@{'/contact-us'}">Contact Us</a>
+			<a class="Home Page" th:ref="@{'/cart'}">Cart</a>
+		</div>
+		 -->
+
+	<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+		<a class="navbar-brand" href="#">NJ Ecommerce</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="#">Home
+						<span class="sr-only">(current)</span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{'/catalog'}">Catalog</a></li>
+				<!-- 		<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> Dropdown </a> -->
+				<!-- 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#">Action</a> <a
+							class="dropdown-item" href="#">Another action</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">Something else here</a>
+					</div></li> -->
+				<li class="nav-item"><a class="nav-link" href="/contact-us">Contact
+						Us</a></li>
+			</ul>
+<!-- 			<form action="#" th:action="@{/search}" method="POST"
+				class="form-inline my-2 my-lg-0">
+				<input class="form-control mr-sm-2" type="search"
+					th:field="*{searchItem}" placeholder="Search Products"
+					aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			</form> -->
+		</div>
+	</nav>
+
+			<div class="card">
+				<div th:each="product : ${productsMatching}" class="card">
+					<img th:src="${product.getPictureUrl()}" class="card-img-top" style="width: 18rem">
+					<div class="card-body">
+						<h4 class="card-title" th:text="${product.getName()}"><b></b></h4>
+						<p class="card-text" th:text="${product.getPrice()}"></p>
+					</div>
+				</div>
+			</div>
+
+	<footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+		<div class="container text-center">
+			<small>Copyright &copy; NJ Ecom (example for testing
+				purposes)</small>
+		</div>
+		<div class="container text-center">
+			<a href="/signup">Sign Up</a>
+		</div>
+
+	</footer>
+</body>
+
+
+</html>
