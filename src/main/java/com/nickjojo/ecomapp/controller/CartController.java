@@ -81,8 +81,9 @@ public class CartController {
 			if (index == -1) {
 				cart.add(new Item(productService.findById(id).get(), item.getQuantity()));
 			} else {
-				cart.get(index).setQuantity(cart.get(index).getQuantity() + item.getQuantity());
-				System.out.println("Added " + item.getProduct().getName());
+				cart.add(new Item(productService.findById(id).get(), + cart.get(index).getQuantity() + item.getQuantity()));
+				cart.remove(index);
+				return "redirect:/cart/";
 
 			}
 			session.setAttribute("cart", cart);

@@ -37,6 +37,10 @@ public class EcommerceApp implements CommandLineRunner, WebMvcConfigurer {
 	// database
 	// then flush data from their session.
 	
+	/*
+	 * 1). Finish product.html page*
+	 */
+	
 	@Autowired
 	private UserService userService;
 

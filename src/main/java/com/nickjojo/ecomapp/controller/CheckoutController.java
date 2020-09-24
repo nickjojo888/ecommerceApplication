@@ -38,6 +38,12 @@ public class CheckoutController {
 		List<Item> cart = (List<Item>) session.getAttribute("cart");
 		User user = new User();
 
+		double price = 0;
+		for (Item item : cart) {
+			price += item.getQuantity() * item.getProduct().getPrice();
+		}
+
+		model.addAttribute("totalPrice", price);
 		model.addAttribute("user", user);
 		model.addAttribute("cart", cart);
 		model.addAttribute("paymentDetails", new PaymentDetails());
@@ -63,10 +69,10 @@ public class CheckoutController {
 		return "redirect:/checkout-success";
 
 	}
-	
+
 	@GetMapping("/checkout-success")
 	public String checkoutSuccess(Model model) {
-		
+
 		return "checkout-success.html";
 	}
 }

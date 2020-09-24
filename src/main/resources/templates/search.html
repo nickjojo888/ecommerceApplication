@@ -85,7 +85,7 @@
 				<div th:each="product : ${productsMatching}" class="card">
 					<img th:src="${product.getPictureUrl()}" class="card-img-top" style="width: 18rem">
 					<div class="card-body">
-						<h4 class="card-title" th:text="${product.getName()}"><b></b></h4>
+						<h4 class="card-title"><a th:href="${'/products/' + product.id}" th:text="${product.getName()}"></a></h4>
 						<p class="card-text" th:text="${product.getPrice()}"></p>
 					</div>
 				</div>

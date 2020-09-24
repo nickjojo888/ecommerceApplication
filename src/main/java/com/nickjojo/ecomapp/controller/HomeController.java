@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.nickjojo.ecomapp.entity.Item;
@@ -40,7 +41,7 @@ public class HomeController {
 		return "login.html";
 	}
 
-	@PostMapping("/search")
+	@PostMapping("/search/")
 	public String searchProducts(@ModelAttribute("product") Product product, Model model) {
 
 		// once this works, delegate it to the repository (e.g: findProductsByQuery)

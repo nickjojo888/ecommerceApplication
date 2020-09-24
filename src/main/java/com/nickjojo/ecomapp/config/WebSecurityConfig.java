@@ -40,22 +40,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(this.userDetailsServiceImpl);
 	}
 
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
-			.authorizeRequests()
-			.antMatchers("/admin")
-			.hasRole("ADMIN")
-			.and()
-			.formLogin()
-			.loginPage("/login")
-			.failureUrl("/login")
-			.defaultSuccessUrl("/admin")
-			.and()
-			.logout()
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-			.logoutSuccessUrl("/login");
+		http.authorizeRequests().antMatchers("/admin").hasRole("ADMIN").and().formLogin().loginPage("/login")
+				.failureUrl("/login").defaultSuccessUrl("/admin").and().logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
 	}
 
 }

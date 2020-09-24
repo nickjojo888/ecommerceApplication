@@ -29,9 +29,8 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 </head>
-
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
-		<a class="navbar-brand" href="#">NJ Ecommerce</a>
+		<a class="navbar-brand" th:href="@{'/'}">NJ Ecommerce</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -41,9 +40,7 @@
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="#">Home
-						<span class="sr-only">(current)</span>
-				</a></li>
+				<li class="nav-item active"><a class="nav-link" th:href="@{'/'}">Home</a></li>
 				<li class="nav-item"><a class="nav-link"
 					th:href="@{'/catalog'}">Catalog</a></li>
 				<!-- 		<li class="nav-item dropdown"><a
@@ -56,25 +53,23 @@
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="#">Something else here</a>
 					</div></li> -->
-				<li class="nav-item"><a class="nav-link" href="/contact-us">Contact
+				<li class="nav-item"><a class="nav-link" th:href="@{'/contact-us'}">Contact
 						Us</a></li>
-						
-						
+			
 			</ul>
-			<form action="#" th:object="${product}" th:action="@{/search}" method="POST" class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="search"
-					th:field="*{name}" placeholder="Search Products" aria-label="Search">
+			<form action="#" th:object="${product}" th:action="@{/search}"
+				method="POST" class="form-inline my-2 my-lg-0">
+				<input class="form-control mr-sm-2" type="search" th:field="*{name}"
+					placeholder="Search Products" aria-label="Search">
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 			</form>
-			
-			<form action="#" th:action="@{/cart}" method="GET" class="form-inline my-2 my-lg-0">
-			   <a class="btn btn-success btn-sm ml-3" href="cart.html">
+			                <a class="btn btn-success btn-sm ml-3" th:href="@{/cart}">
                     <i class="fa fa-shopping-cart"></i> Cart
-                    <span class="badge badge-light"><!-- GET USER'S NO. ITEMS IN CART --></span>
+                    <span class="badge badge-light" th:text="${itemsInCart}"></span>
                 </a>
-			</form>
 		</div>
 	</nav>
+
 <section class="jumbotron text-center">
     <div class="container">
         <h1 class="jumbotron-heading">E-COMMERCE CATEGORY</h1>
@@ -107,27 +102,39 @@
                     <li class="list-group-item"><a href="category.html">Vestibulum at eros</a></li>
                 </ul>
             </div>
+            <div th:each="product : ${allProducts}">
+            <form action="#" th:action="@{/cart/{id}(id=${product.id})}"
+						th:object="${item}" method="POST">
             <div class="card bg-light mb-3">
                 <div class="card-header bg-success text-white text-uppercase">Last product</div>
                 <div class="card-body">
-                    <img class="img-fluid" src="https://dummyimage.com/600x400/55595c/fff" />
-                    <h5 class="card-title">Product title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <p class="bloc_left_price">99.00 $</p>
-                </div>
+                    <img class="img-fluid" th:src="${product.getPictureUrl()}" />
+                    <h5 class="card-title" th:text="${product.getName()}"></h5>
+                    <p class="card-text" th:text="${product.getDescription()}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <p class="bloc_left_price" th:text="${product.getPrice()}">99.00 $</p>
+               <button class="btn btn-success my-2 my-sm-0" type="submit">Add
+									To cart</button>
+							</div>
+						</div>
+					</form>
             </div>
         </div>
         <div class="col">
             <div class="row">
+            <div th:each="product : ${allProducts}">
+            <form action="#" th:action="@{/cart/{id}(id=${product.id})}"
+						th:object="${item}" method="POST">
+            
                 <div class="col-12 col-md-6 col-lg-4">
+
                     <div class="card">
-                        <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">
+                        <img class="card-img-top" th:src="${product.getPictureUrl()}" alt="Card image cap">
                         <div class="card-body">
-                            <h4 class="card-title"><a href="product.html" title="View Product">Product title</a></h4>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <h4 class="card-title"><a href="product.html" title="View Product" th:text="${product.getName()}">Product title</a></h4>
+                            <p class="card-text" th:text="${product.getDescription()}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                             <div class="row">
                                 <div class="col">
-                                    <p class="btn btn-danger btn-block">99.00 $</p>
+                                    <p class="btn btn-danger btn-block" th:text="${product.getPrice()}">99.00 $</p>
                                 </div>
                                 <div class="col">
                                     <a href="#" class="btn btn-success btn-block">Add to cart</a>
@@ -136,91 +143,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card">
-                        <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title"><a href="product.html" title="View Product">Product title</a></h4>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="btn btn-danger btn-block">99.00 $</p>
-                                </div>
-                                <div class="col">
-                                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card">
-                        <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title"><a href="product.html" title="View Product">Product title</a></h4>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="btn btn-danger btn-block">99.00 $</p>
-                                </div>
-                                <div class="col">
-                                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card">
-                        <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title"><a href="product.html" title="View Product">Product title</a></h4>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="btn btn-danger btn-block">99.00 $</p>
-                                </div>
-                                <div class="col">
-                                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card">
-                        <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title"><a href="product.html" title="View Product">Product title</a></h4>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="btn btn-danger btn-block">99.00 $</p>
-                                </div>
-                                <div class="col">
-                                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card">
-                        <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title"><a href="product.html" title="View Product">Product title</a></h4>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="btn btn-danger btn-block">99.00 $</p>
-                                </div>
-                                <div class="col">
-                                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </form>
+                
                 <div class="col-12">
                     <nav aria-label="...">
                         <ul class="pagination">

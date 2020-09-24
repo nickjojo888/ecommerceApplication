@@ -1,0 +1,208 @@
+<!-- CREDITS: https://bbbootstrap.com/snippets/ecommerce-single-product-page-design-template-64204693 -->
+<!-- ADD: SUGGESTED PRODUCTS IN THE SAME CARD LAYOUT AS HOME PAGE, PRODUCTS HAVE TO BE IN SAME CATEGORY -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layout/offline">
+
+<head>
+<title>NJ Ecommerce</title>
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<!-- Bootstrap core CSS -->
+<link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
+	rel="stylesheet">
+
+<!-- Custom fonts for this template -->
+<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
+	rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+	rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Kaushan+Script'
+	rel='stylesheet' type='text/css'>
+<link
+	href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
+	rel='stylesheet' type='text/css'>
+<link
+	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
+	rel='stylesheet' type='text/css'>
+
+
+<!-- Custom styles for this template -->
+<link th:href="@{css/home.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+		<a class="navbar-brand" th:href="@{'/'}">NJ Ecommerce</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" th:href="@{'/'}">Home</a></li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{'/catalog'}">Catalog</a></li>
+				<!-- 		<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> Dropdown </a> -->
+				<!-- 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#">Action</a> <a
+							class="dropdown-item" href="#">Another action</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">Something else here</a>
+					</div></li> -->
+				<li class="nav-item"><a class="nav-link" th:href="@{'/contact-us'}">Contact
+						Us</a></li>
+			
+			</ul>
+			<form action="#" th:object="${product}" th:action="@{/search}"
+				method="POST" class="form-inline my-2 my-lg-0">
+				<input class="form-control mr-sm-2" type="search" th:field="*{name}"
+					placeholder="Search Products" aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			</form>
+			                <a class="btn btn-success btn-sm ml-3" th:href="@{/cart}">
+                    <i class="fa fa-shopping-cart"></i> Cart
+                    <span class="badge badge-light" th:text="${itemsInCart}"></span>
+                </a>
+		</div>
+	</nav>
+
+<div class="super_container">
+    <header class="header" style="display: none;">
+        <div class="header_main">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-12 order-lg-2 order-3 text-lg-left text-right">
+                        <div class="header_search">
+                            <div class="header_search_content">
+                                <div class="header_search_form_container">
+                                    <form action="#" class="header_search_form clearfix">
+                                        <div class="custom_dropdown">
+                                            <div class="custom_dropdown_list"> <span class="custom_dropdown_placeholder clc">All Categories</span> <i class="fas fa-chevron-down"></i>
+                                                <ul class="custom_list clc">
+                                                    <li><a class="clc" href="#">All Categories</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="single_product">
+        <div class="container-fluid" style=" background-color: #fff; padding: 11px;">
+            <div class="row">
+                <div class="col-lg-3 order-lg-2 order-2">
+                    
+                <img class="img-thumbnail" th:src="${theProduct.getPictureUrl()}" alt="">
+
+                   
+                </div>
+                <div class="col-lg-3 order-lg-2 order-2">
+                    <div class="image_selected"><img src="" alt=""></div>
+                </div>
+                <div class="col-lg-6 order-3">
+                    <div class="product_description">
+                        <nav>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">Products</a></li>
+                                <li class="breadcrumb-item active">Accessories</li>
+                            </ol>
+                        </nav>
+                        <h3  th:text="${theProduct.getName()}" class="product_name"></h3>
+                        <div> <span th:text=" '$' + ${theProduct.getPrice()}"></span> <strike class="product_discount"> <span style='color:red' th:text=" '   $' + ${theProduct.getPrice()} * 2"><span> </strike> </div>
+                        <div> <span class="product_saved">You Saved:</span> <span style='color:green' th:text="${theProduct.getPrice()}"><span> </div>
+                        <hr class="singleline">
+                        <hr class="singleline">
+                        <div class="order_info d-flex flex-row">
+                            <form action="#"  th:action="@{/cart/{id}(id=${theProduct.id})}" th:object="${item}" method="POST">
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6" style="margin-left: 13px;">
+                                <div class="product_quantity"> <span>QTY: </span> <input th:field="${item.quantity}" id="quantity_input" type="text" pattern="[0-9]*" value="1">
+                                    <div class="quantity_buttons">
+                                        <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
+                                        <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6"> <button type="submit" class="btn btn-primary shop-button">Add to Cart</button>
+                                <div class="product_fav"><i class="fas fa-heart"></i></div>
+                            </div>
+
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row row-underline">
+                <div class="col-md-6"> <h3 class=" deal-text">Combo Offers</h3> </div>
+                <div class="col-md-6"> <a href="#" data-abc="true"> <span class="ml-auto view-all"></span> </a> </div>
+            </div>
+         	<div class="col-12 col-sm-4 col-md-8 col-lg-3 car-col-2">
+				<div th:each="product : ${productsByCategory}">
+					<form action="#" th:action="@{/cart/{id}(id=${product.id})}"
+						th:object="${item}" method="POST">
+						<div class="card">
+							<img class="card-img" th:src="${product.getPictureUrl()}">
+							<a href="#" class="card-link text-danger like"> <i
+								class="fas fa-heart"></i>
+							</a>
+						</div>
+						<div class="card-body">
+							<a th:href="${'/products/' + product.id}"><h4 class="card-title"  th:text="${product.getName()}"></h4></a>
+							<h6 class="card-subtitle mb-2 text-muted"
+								th:text="${product.getCategory()}"></h6>
+							<p class="card-text" th:text="${product.getDescription()}">
+							<div
+								class="buy d-flex justify-content-between align-items-center">
+								<div class="price text-success">
+									<h5 class="mt-4" th:text="'$' + ${product.getPrice()}"></h5>
+								</div>
+								<div class="form-group blu-margin">
+									<div class="form-label-group">
+										<input th:field="${item.quantity}" type="text"
+											id="quantity" name="quantity" class="form-control"
+											placeholder="1" required="required">
+									</div>
+								</div>
+								<button class="btn btn-success my-2 my-sm-0" type="submit">Add
+									To cart</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+     
+    </div>
+</div>
+
+<footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+	<div class="container text-center">
+		<small>Copyright &copy; NJ Ecom (example for testing purposes)</small>
+	</div>
+	<div class="container text-center">
+		<a href="/signup">Sign Up</a>
+	</div>
+
+</footer>
+</body>
+
+</html>

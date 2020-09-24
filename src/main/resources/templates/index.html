@@ -73,7 +73,7 @@
 						Us</a></li>
 			
 			</ul>
-			<form action="#" th:object="${product}" th:action="@{/search}"
+			<form action="#" th:object="${product}" th:action="@{/search/{keyword}(keyword=${product.name})}"
 				method="POST" class="form-inline my-2 my-lg-0">
 				<input class="form-control mr-sm-2" type="search" th:field="*{name}"
 					placeholder="Search Products" aria-label="Search">
@@ -93,11 +93,12 @@
 			<div class="mask rgba-black-strong flex-center">
 				<div class="container">
 					<div class="white-text text-center wow fadeInUp"
-						style="color: white; padding: 225px;">
-						<h2>NJ Ecommerce</h2>
-						<h5>Home to the best luxury accessories!</h5>
+						style="color: white; padding: 300px;">
+						<h1>NJ Ecommerce</h1>
+						<h3>Home to the best luxury accessories!</h3>
 						<br>
-						<button class="btn-md btn-success">Visit Catalog</button>
+						<form action="#" th:action="${'/catalog'}">
+						<button class="btn-lg btn-success" type="submit"  >Visit Catalog</button></form>
 					</div>
 				</div>
 			</div>
@@ -119,7 +120,7 @@
 							</a>
 						</div>
 						<div class="card-body">
-							<h4 class="card-title" th:text="${product.getName()}"></h4>
+							<a th:href="${'/products/' + product.id}"><h4 class="card-title"  th:text="${product.getName()}"></h4></a>
 							<h6 class="card-subtitle mb-2 text-muted"
 								th:text="${product.getCategory()}"></h6>
 							<p class="card-text" th:text="${product.getDescription()}">
