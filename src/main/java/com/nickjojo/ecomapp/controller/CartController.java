@@ -63,9 +63,11 @@ public class CartController {
 	public String addProduct(@PathVariable Long id, HttpServletRequest request, @ModelAttribute("item") Item item,
 			Model model, HttpSession session) {
 
+		
 	if(item.getQuantity() <= 0) {
-		return "redirect:/";
+		item.setQuantity(1);
 	}
+	
 		if (session.getAttribute("cart") == null) {
 			System.out.println("session null");
 			List<Item> cart = new ArrayList<>();
@@ -79,6 +81,7 @@ public class CartController {
 			List<Item> cart = (List<Item>) session.getAttribute("cart");
 			int index = this.exists(id, cart);
 			if (index == -1) {
+				
 				cart.add(new Item(productService.findById(id).get(), item.getQuantity()));
 			} else {
 				cart.add(new Item(productService.findById(id).get(), + cart.get(index).getQuantity() + item.getQuantity()));
